@@ -28,15 +28,15 @@ class BorderFillComponent extends HTMLElement{
     render() {
         const canvas = document.createElement('canvas')
         const w = this.image.width,h = this.image.height
-        canvas.width = w*1.2
-        canvas.height = h*1.2
+        canvas.width = w
+        canvas.height = h
         const context = canvas.getContext('2d')
-        context.drawImage(this.image,this.image.width*0.1,this.image.height*0.1)
+        context.drawImage(this.image,0,0)
         if(!this.points && !this.index) {
             this.index = 0
             this.points = []
             BorderIdentifyingUtil.getBorder(context,this.points,w,h)
-            console.log(this.points)
+            //console.log(this.points)
         }
         context.lineWidth = w/80
         context.fillStyle = this.color
@@ -49,7 +49,7 @@ class BorderFillComponent extends HTMLElement{
         }
 
         this.img.src = canvas.toDataURL()
-        console.log(this.index-this.points.length)
+        //console.log(this.index-this.points.length)
     }
     connectedCallback() {
         this.image = new Image()
@@ -64,7 +64,7 @@ class BorderIdentifyingUtil {
     static getBorder(context,points,w,h) {
         const imgData = context.getImageData(0,0,w,h)
         const data = imgData.data
-        console.log(data.length)
+        //console.log(data.length)
         var opaquePoints = 0
         for(var i=0;i<data.length;i+=4) {
             const alpha = data[i+3]
